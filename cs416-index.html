@@ -5,6 +5,7 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="style.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
@@ -14,37 +15,17 @@
       rel="stylesheet"
     />
   </head>
-  <body
-    style="text-align: center; display: flex; flex-direction: column; margin: 0"
-  >
-    <div
-      id="header"
-      style="background-color: #f0f0f0; padding: 10px; width: 100%"
-    >
+  <body>
+    <div id="header" class="header">
       <h1>
-        <span style="font-family: 'Courier Prime', sans-serif"
-          >Foreign Businesses</span
-        ><br />
-        <span style="font-family: 'Playwrite HR', sans-serif">Colorado</span>
-        <div id="button-container" style="justify-content: center"></div>
+        <span class="header-text">Foreign Businesses</span><br />
+        <span class="header-text colorado">Colorado</span>
+        <div id="button-container" class="button-container"></div>
       </h1>
     </div>
 
-    <div
-      id="chart-container"
-      style="
-        height: 80vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-      "
-    >
-      <svg
-        id="chart"
-        style="width: 100%; height: 100%"
-        viewBox="0 0 800 600"
-      ></svg>
+    <div id="chart-container" class="chart-container">
+      <svg id="chart" class="chart" viewBox="0 0 800 600"></svg>
     </div>
 
     <script>
