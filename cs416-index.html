@@ -21,6 +21,9 @@
         <span class="header-text">Foreign Businesses</span><br />
         <span class="header-text colorado">Colorado</span>
         <div id="button-container" class="button-container"></div>
+          <button id="countries-button">Top 10 Countries</button>
+          <button id="area-button">Countries by Area</button>
+          <button id="time-button">Countries vs. Time</button>
       </h1>
     </div>
 
@@ -35,11 +38,10 @@
        'agentprincipaladdress1', 'agentprincipalcity', 'agentprincipalstate',
        'agentprincipalzipcode', 'agentprincipalcountry', 'entityformdate' */
 
-      // make buttons for navigation
-      var buttonContainer = d3.select('#button-container')
-      buttonContainer.append('button').text('Top 10 Countries')
-      buttonContainer.append('button').text('Countries by Area')
-      buttonContainer.append('button').text('Countries vs. Time')
+        
+
+
+    
 
       const CSV_LOCATION =
         'https://gist.githubusercontent.com/fullstacc/853f0091dc60b7e4ab26a8eb15735862/raw/16a88dc7728a26d9d8f6fa0a2a9a03216ec41c10/colorado_international_counts.csv'
@@ -59,17 +61,10 @@
           })
           .slice(0, 10)
 
-        // Function to clear the SVG content
-        function clearCanvas() {
-          d3.select('#chart').selectAll('*').remove() // Remove all child elements of the SVG
-        }
+       
 
         // barchart
         // sauce: https://d3-graph-gallery.com/graph/barplot_horizontal.html
-        // set the dimensions and margins of the graph
-        // var margin = { top: 20, right: 30, bottom: 40, left: 90 },
-        //   width = 460 - margin.left - margin.right,
-        //   height = 400 - margin.top - margin.bottom
 
         const width = 500;
         const height = 300;
@@ -136,7 +131,30 @@
           })
           .attr('height', y.bandwidth())
           .attr('fill', '#69b3a2')
+
+
+      // Function to clear the SVG content
+      function clearCanvas() {
+          d3.select('#chart').selectAll('*').remove() // Remove all child elements of the SVG
+        }
+
+        var buttonContainer = d3.select('#button-container')
+
+        // Assuming buttonContainer is a D3 selection
+        buttonContainer.selectAll('button')
+          .on('click', clearCanvas); // Attach the click event listener to all buttons
+
+      // make buttons for navigation
+      var buttonContainer = d3.select('#button-container')
+      document.getElementById('time-button').addEventListener('click', function() {
+  clearCanvas();
+});
+
+
+
       } // end init
+
+      
 
       init()
     </script>
