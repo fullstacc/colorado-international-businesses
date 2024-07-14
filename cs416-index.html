@@ -33,10 +33,8 @@
 
     <script type="module">
      import {drawBarGraph} from './drawBarGraph.js';
-        
-
-
-    
+     import {drawLineGraph} from './drawLineGraph.js';
+     import {drawGeoMap} from './drawGeoMap.js';
 
       const CSV_LOCATION =
         'https://gist.githubusercontent.com/fullstacc/853f0091dc60b7e4ab26a8eb15735862/raw/16a88dc7728a26d9d8f6fa0a2a9a03216ec41c10/colorado_international_counts.csv'
@@ -94,7 +92,16 @@
       var buttonContainer = d3.select('#button-container')
       document.getElementById('time-button').addEventListener('click', function() {
   clearCanvas();
+  drawBarGraph();
 });
+      document.getelementById('countries-button').addEventListener('click', function() {
+  clearCanvas();
+  drawBarGraph();
+});
+      document.getElementById('area-button').addEventListener('click', function() {
+  clearCanvas();
+  drawBarGraph();
+      });
 
 
 document.addEventListener('DOMContentLoaded', function() {
