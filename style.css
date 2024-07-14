@@ -22,6 +22,11 @@ body {
     justify-content: center;
   }
 
+  #chart {
+    display: block;
+    margin:auto
+  }
+
 .colorado {
   font-family: "Playwrite HR", cursive;
   font-optical-sizing: auto;

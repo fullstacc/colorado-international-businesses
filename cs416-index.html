@@ -71,32 +71,24 @@
         //   width = 460 - margin.left - margin.right,
         //   height = 400 - margin.top - margin.bottom
 
-        var canvasWidth = 200 // 80vw
-        var canvasHeight = 50 // 50vh
-        var widthInPixels = window.innerWidth * (canvasWidth / 100)
-        var heightInPixels = window.innerHeight * (canvasHeight / 100)
-
-        var margin = {
-          top: heightInPixels * 0.05, // 5% of the canvas height
-          right: widthInPixels * 0.065, // 6.5% of the canvas width
-          bottom: heightInPixels * 0.1, // 10% of the canvas height
-          left: widthInPixels * 0.195, // 19.5% of the canvas width
-        }
-
-        var width = widthInPixels - margin.left - margin.right
-        var height = heightInPixels - margin.top - margin.bottom
+        const width = 500;
+        const height = 300;
+        const marginTop = 0;
+        const marginRight = 20;
+        const marginBottom = 0;
+        const marginLeft = 300;
 
         // append the svg object to the body of the page
         var svg = d3
           .select('#chart')
           .append('svg')
-          .attr('width', width + margin.left + margin.right)
-          .attr('height', height + margin.top + margin.bottom)
+          .attr("width", width)
+          .attr("height", height)
           .style('background-color', 'lightblue')
           .append('g')
           .attr(
             'transform',
-            'translate(' + margin.left + ',' + margin.top + ')'
+            'translate(' +  marginLeft + ',' + marginRight+ ')'
           )
 
         // Add X axis
