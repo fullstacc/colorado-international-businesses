@@ -31,13 +31,8 @@
       <svg id="chart" class="chart" viewBox="0 0 800 600"></svg>
     </div>
 
-    <script>
-      /* foreign_businesses.csv is a CSV file with the following columns:
-        'entityid', 'entityname', 'entitystatus', 'jurisdictonofformation',
-       'entitytype', 'agentfirstname', 'agentmiddlename', 'agentlastname',
-       'agentprincipaladdress1', 'agentprincipalcity', 'agentprincipalstate',
-       'agentprincipalzipcode', 'agentprincipalcountry', 'entityformdate' */
-
+    <script type="module">
+     import {drawBarGraph} from './drawBarGraph.js';
         
 
 
@@ -73,64 +68,15 @@
         const marginBottom = 0;
         const marginLeft = 300;
 
-        // append the svg object to the body of the page
-        var svg = d3
-          .select('#chart')
-          .append('svg')
-          .attr("width", width)
-          .attr("height", height)
-          .style('background-color', 'lightblue')
-          .append('g')
-          .attr(
-            'transform',
-            'translate(' +  marginLeft + ',' + marginRight+ ')'
-          )
 
-        // Add X axis
-        var x = d3
-          .scaleLinear()
-          .domain([
-            0,
-            d3.max(data, function (d) {
-              return d.count
-            }),
-          ]) // Dynamic domain based on data
-          .range([0, width])
-        svg
-          .append('g')
-          .attr('transform', 'translate(0,' + height + ')')
-          .call(d3.axisBottom(x))
-          .selectAll('text')
-          .attr('transform', 'translate(-10,0)rotate(-45)')
-          .style('text-anchor', 'end')
+    
 
-        // Y axis
-        var y = d3
-          .scaleBand()
-          .range([0, height])
-          .domain(
-            data.map(function (d) {
-              return d.name
-            })
-          )
-          .padding(0.1)
-        svg.append('g').call(d3.axisLeft(y))
-
-        //Bars
-        svg
-          .selectAll('myRect')
-          .data(data)
-          .enter()
-          .append('rect')
-          .attr('x', x(0))
-          .attr('y', function (d) {
-            return y(d.name)
-          })
-          .attr('width', function (d) {
-            return x(d.count)
-          })
-          .attr('height', y.bandwidth())
-          .attr('fill', '#69b3a2')
+  // Setup the event listener for the 'countries-button'
+  d3.select('#countries-button').on('click', function() {
+    clearCanvas(); // Clear the canvas
+    drawBarGraph(width,height,marginLeft
+          ,marginRight,marginTop,marginBottom,data); // Redraw the graph
+  });
 
 
       // Function to clear the SVG content
@@ -151,12 +97,15 @@
 });
 
 
-
+document.addEventListener('DOMContentLoaded', function() {
+    drawBarGraph(); // This will ensure the bar graph is drawn when the page loads
+  });
       } // end init
 
       
 
       init()
     </script>
+    
   </body>
 </html>
