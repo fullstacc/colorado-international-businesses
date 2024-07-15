@@ -20,15 +20,16 @@
       <h1>
         <span class="header-text">Foreign Businesses</span><br />
         <span class="header-text colorado">Colorado</span>
-        <div id="button-container" class="button-container"></div>
+        <div id="button-container" class="button-container">
           <button id="countries-button">Top 10 Countries</button>
           <button id="area-button">Countries by Area</button>
           <button id="time-button">Countries vs. Time</button>
+        </div>
       </h1>
     </div>
 
     <div id="chart-container" class="chart-container">
-      <svg id="chart" class="chart" viewBox="0 0 1000 2000"></svg>
+      <svg id="chart" class="chart" viewBox="0 0 1000 800"></svg>
     </div>
 
     <script type="module">
@@ -36,83 +37,72 @@
      import {drawLineGraph} from './drawLineGraph.js';
      import {drawGeoMap} from './drawGeoMap.js';
 
-      const CSV_LOCATION =
+      const BAR_DATA_LOCATION =
         'https://gist.githubusercontent.com/fullstacc/853f0091dc60b7e4ab26a8eb15735862/raw/16a88dc7728a26d9d8f6fa0a2a9a03216ec41c10/colorado_international_counts.csv'
 
+      const LINE_DATA_LOCATION = "https://gist.githubusercontent.com/fullstacc/5f612f5e2d68520bd608ac423dea081f/raw/3afadfc1fcf6e3bb72b5bed970cdbf8d1b51f09f/colorado_international_line_graph_data.csv"
+
       async function init() {
-        var data = await d3.csv(CSV_LOCATION, function (d) {
+        // handle bar data
+        var bar_data = await d3.csv(BAR_DATA_LOCATION, function (d) {
           return {
             name: d.name, // Country name
             count: +d.count, // Convert count to number
           }
         })
-        console.log(data)
 
-        data = data
+        bar_data = bar_data
           .sort(function (a, b) {
             return b.count - a.count
           })
           .slice(0, 10)
+        
+        // handle line data
+        var line_data = await d3.csv(LINE_DATA_LOCATION, function (d) {
+          return {
+              year: new Date(+d.year, 0, 1), // Convert year to Date object
+              count: +d.count, // Convert count to number
+              name: d.name // Country name
+            }
+          });
 
-       
-
-        // barchart
-        // sauce: https://d3-graph-gallery.com/graph/barplot_horizontal.html
-
-        const width = 500;
+        // Set dimensions and margins
+        const width = 800;
         const height = 500;
         const marginTop = 20;
         const marginRight = 20;
         const marginBottom = 100;
-        const marginLeft = 300;
+        const marginLeft = 100;
 
+        drawBarGraph(width, height, marginLeft, marginRight, marginTop, marginBottom, bar_data);
 
-    
+        // Event listener for 'countries-button'
+        d3.select('#countries-button').on('click', function() {
+          clearCanvas(); // Clear the canvas
+          drawBarGraph(width, height, marginLeft, marginRight, marginTop, marginBottom, bar_data); // Redraw the graph
+        });
 
-  // Setup the event listener for the 'countries-button'
-  d3.select('#countries-button').on('click', function() {
-    clearCanvas(); // Clear the canvas
-    drawBarGraph(width,height,marginLeft
-          ,marginRight,marginTop,marginBottom,data); // Redraw the graph
-  });
+        // Event listener for 'time-button'
+        document.getElementById('time-button').addEventListener('click', function() {
+          clearCanvas();
+          drawLineGraph(width, height, marginLeft, marginRight, marginTop, marginBottom, line_data);
+        });
 
+        // Event listener for 'area-button'
+        document.getElementById('area-button').addEventListener('click', function() {
+          clearCanvas();
+        });
 
-      // Function to clear the SVG content
-      function clearCanvas() {
-          d3.select('#chart').selectAll('*').remove() // Remove all child elements of the SVG
+        // Clear canvas function
+        function clearCanvas() {
+          d3.select('#chart').selectAll('*').remove(); // Remove all child elements of the SVG
         }
 
-        var buttonContainer = d3.select('#button-container')
+        // Initial bar graph rendering
+        drawBarGraph(width, height, marginLeft, marginRight, marginTop, marginBottom, bar_data);
+      }
 
-        // Assuming buttonContainer is a D3 selection
-        buttonContainer.selectAll('button')
-          .on('click', clearCanvas); // Attach the click event listener to all buttons
-
-      // make buttons for navigation
-      var buttonContainer = d3.select('#button-container')
-      document.getElementById('time-button').addEventListener('click', function() {
-  clearCanvas();
-  drawBarGraph();
-});
-      document.getelementById('countries-button').addEventListener('click', function() {
-  clearCanvas();
-  drawBarGraph();
-});
-      document.getElementById('area-button').addEventListener('click', function() {
-  clearCanvas();
-  drawBarGraph();
-      });
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    drawBarGraph(); // This will ensure the bar graph is drawn when the page loads
-  });
-      } // end init
-
-      
-
-      init()
+      init();
     </script>
-    
   </body>
 </html>

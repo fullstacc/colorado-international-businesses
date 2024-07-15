@@ -26,7 +26,7 @@ function drawBarGraph(width, height, marginLeft, marginRight, marginTop, marginB
 
     // Insert X axis label here
     svg.append("text")
-      .attr("transform", "translate(" + (width / 2) + " ," + (height + marginBottom - 30) + ")")
+      .attr("transform", "translate(" + (width / 2) + " ," + (-marginTop / 2) + ")")
       .style("text-anchor", "middle")
       .style('font-family', 'sans-serif')
       .style('font-size', '12px')
