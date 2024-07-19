@@ -33,3 +33,12 @@ body {
   font-weight: 400;
   font-style: normal;
 }
+
+#chart-container {
+  font-family: "Playwrite HR", cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  font-size: large;
+}
